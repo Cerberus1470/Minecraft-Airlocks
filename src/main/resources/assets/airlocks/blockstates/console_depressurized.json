@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "normal": {
+      "model": "airlock_console:console_default"
+    },
+    "facing=north": {
+      "model": "airlock_console:console_default"
+    },
+    "facing=east": {
+      "model": "airlock_console:console_depressurized",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "airlock_console:console_depressurized",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "airlock_console:console_depressurized",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "airlock_console:console_depressurized",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "airlock_console:console_depressurized",
+      "x": 90
+    }
+  }
+}

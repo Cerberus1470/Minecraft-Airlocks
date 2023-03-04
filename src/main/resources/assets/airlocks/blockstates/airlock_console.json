@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "normal": {
+      "model": "airlock_console:console_default"
+    },
+    "pressurized": {
+      "model": "airlock_console:console_pressurized"
+    }
+  }
+}
