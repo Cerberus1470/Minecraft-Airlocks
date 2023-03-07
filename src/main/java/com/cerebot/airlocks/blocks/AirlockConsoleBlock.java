@@ -2,10 +2,12 @@ package com.cerebot.airlocks.blocks;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -17,22 +19,15 @@ import net.minecraft.world.World;
 public class AirlockConsoleBlock extends BlockBase {
 
     public static final AxisAlignedBB[] AIRLOCK_CONSOLE_AABB = {
-            new AxisAlignedBB(0.125D, 0D, 0D, 0.875D, 1D, 0.0625D), //South
-            new AxisAlignedBB(0.9375D, 0D, 0.125D, 1D, 1D, 0.875D), //West
-            new AxisAlignedBB(0.125D, 0D, 0.9375D, 0.875D, 1D, 1D), //North
-            new AxisAlignedBB(0D, 0D, 0.125D, 0.0625D, 1D, 0.875D) //East
+            new AxisAlignedBB(0.1875D, 0.0625D, 0D, 0.8125D, 0.9375D, 0.0625D), //South
+            new AxisAlignedBB(0.9375D, 0.0625D, 0.1875D, 1D, 0.9375D, 0.8125D), //West
+            new AxisAlignedBB(0.1875D, 0.0625D, 0.9375D, 0.8125D, 0.9375D, 1D), //North
+            new AxisAlignedBB(0D, 0.0625D, 0.1875D, 0.0625D, 0.9375D, 0.8125D) //East
     };
 
-//    public static final AxisAlignedBB AIRLOCK_CONSOLE_AABB_NORTH =
-//            new AxisAlignedBB(0.125D, 0D, 0.9375D, 0.875D, 1D, 1D);
-//    public static final AxisAlignedBB AIRLOCK_CONSOLE_AABB_EAST =
-//            new AxisAlignedBB(0D, 0D, 0.125D, 0.0625D, 1D, 0.875D);
-//    public static final AxisAlignedBB AIRLOCK_CONSOLE_AABB_SOUTH =
-//            new AxisAlignedBB(0.125D, 0D, 0D, 0.875D, 1D, 0.0625D);
-//    public static final AxisAlignedBB AIRLOCK_CONSOLE_AABB_WEST =
-//            new AxisAlignedBB(0.9375D, 0D, 0.125D, 1D, 1D, 0.875D);
 
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyBool PRESSURIZED = PropertyBool.create("pressurized");
 
     public AirlockConsoleBlock(String name, Material material) {
         super(name, material);
@@ -42,16 +37,16 @@ public class AirlockConsoleBlock extends BlockBase {
         setResistance(20.0F);
         setHarvestLevel("pickaxe", 2);
         setLightLevel(0.8F);
-        setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+        setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(PRESSURIZED, false));
     }
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         System.out.println("The facing value is: " + facing);
         if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
-            return this.getDefaultState().withProperty(FACING, EnumFacing.NORTH);
+            return this.getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(PRESSURIZED, false);
         }
-        return this.getDefaultState().withProperty(FACING, facing);
+        return this.getDefaultState().withProperty(FACING, facing).withProperty(PRESSURIZED, false);
     }
 
     @Override
@@ -61,12 +56,12 @@ public class AirlockConsoleBlock extends BlockBase {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+        return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta)).withProperty(PRESSURIZED, false);
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING);
+        return new BlockStateContainer(this, FACING, PRESSURIZED);
     }
 
     @Override
@@ -81,24 +76,21 @@ public class AirlockConsoleBlock extends BlockBase {
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-//        switch (state.getValue(FACING).getHorizontalIndex()) {
-//            case 0: {
-//                return AIRLOCK_CONSOLE_AABB_NORTH;
-//            }
-//            case 1: {
-//                return AIRLOCK_CONSOLE_AABB_EAST;
-//            }
-//            case 2: {
-//                return AIRLOCK_CONSOLE_AABB_SOUTH;
-//            }
-//            case 3: {
-//                return AIRLOCK_CONSOLE_AABB_WEST;
-//            }
-//        }
         try {
             return AIRLOCK_CONSOLE_AABB[state.getValue(FACING).getHorizontalIndex()];
         } catch (IndexOutOfBoundsException e) {
             return AIRLOCK_CONSOLE_AABB[0];
         }
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+        if (state.getValue(PRESSURIZED)) {
+            worldIn.setBlockState(pos, state.withProperty(PRESSURIZED, false));
+        } else {
+            worldIn.setBlockState(pos, state.withProperty(PRESSURIZED, true));
+        }
+        return true;
     }
 }

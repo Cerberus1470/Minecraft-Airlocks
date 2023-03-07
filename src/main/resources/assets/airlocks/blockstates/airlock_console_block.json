@@ -1,8 +1,12 @@
 {
   "variants": {
-    "facing=south": {"model":  "airlocks:airlock_console_block"},
-    "facing=west": {"model":  "airlocks:airlock_console_block", "y": 90},
-    "facing=north": {"model":  "airlocks:airlock_console_block", "y": 180},
-    "facing=east": {"model":  "airlocks:airlock_console_block", "y": 270}
+    "facing=south,pressurized=false": {"model":  "airlocks:console_stable_depressurized"},
+    "facing=west,pressurized=false": {"model":  "airlocks:console_stable_depressurized", "y": 90},
+    "facing=north,pressurized=false": {"model":  "airlocks:console_stable_depressurized", "y": 180},
+    "facing=east,pressurized=false": {"model":  "airlocks:console_stable_depressurized", "y": 270},
+    "facing=south,pressurized=true": {"model":  "airlocks:console_stable_pressurized"},
+    "facing=west,pressurized=true": {"model":  "airlocks:console_stable_pressurized", "y": 90},
+    "facing=north,pressurized=true": {"model":  "airlocks:console_stable_pressurized", "y": 180},
+    "facing=east,pressurized=true": {"model":  "airlocks:console_stable_pressurized", "y": 270}
   }
 }
