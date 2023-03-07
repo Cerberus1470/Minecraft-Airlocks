@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "airlocks:items/black.png"
+    "layer0": "airlocks:items/console_unstable_default"
   }
 }

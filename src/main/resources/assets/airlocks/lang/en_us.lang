@@ -1,2 +1,9 @@
-tile.console_depressurized.name=Console Depressurized
-tile.console_pressurized.name=Console Pressurized
+#Items
+item.airlock_console.name=Airlock Console
+item.ruby.name=Ruby
+
+#Blocks
+tile.airlock_console_block.name=Airlock Console Block
+
+#Tab
+itemGroup.airlocks_tab=Airlocks

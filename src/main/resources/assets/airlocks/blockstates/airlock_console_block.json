@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=south": {"model":  "airlocks:airlock_console_block"},
+    "facing=west": {"model":  "airlocks:airlock_console_block", "y": 90},
+    "facing=north": {"model":  "airlocks:airlock_console_block", "y": 180},
+    "facing=east": {"model":  "airlocks:airlock_console_block", "y": 270}
+  }
+}
