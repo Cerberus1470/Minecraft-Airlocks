@@ -3,7 +3,8 @@ item.airlock_console.name=Airlock Console
 item.ruby.name=Ruby
 
 #Blocks
-tile.airlock_console_block.name=Airlock Console Block
+tile.block_airlock_console.name=Airlock Console Block
+tile.block_canvas.name=Airlock Canvas
 
 #Tab
 itemGroup.airlocks_tab=Airlocks

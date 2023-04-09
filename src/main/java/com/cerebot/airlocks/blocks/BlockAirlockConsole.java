@@ -16,7 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 @SuppressWarnings({"NullableProblems", "deprecation"})
-public class AirlockConsoleBlock extends BlockBase {
+public class BlockAirlockConsole extends BlockBase {
 
     public static final AxisAlignedBB[] AIRLOCK_CONSOLE_AABB = {
             new AxisAlignedBB(0.1875D, 0.0625D, 0D, 0.8125D, 0.9375D, 0.0625D), //South
@@ -29,7 +29,7 @@ public class AirlockConsoleBlock extends BlockBase {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final PropertyBool PRESSURIZED = PropertyBool.create("pressurized");
 
-    public AirlockConsoleBlock(String name, Material material) {
+    public BlockAirlockConsole(String name, Material material) {
         super(name, material);
 
         setSoundType(SoundType.METAL);
@@ -86,6 +86,7 @@ public class AirlockConsoleBlock extends BlockBase {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+//        System.out.println("Hello, the airlock console has been changed to " + state.getValue(PRESSURIZED));
         if (state.getValue(PRESSURIZED)) {
             worldIn.setBlockState(pos, state.withProperty(PRESSURIZED, false));
         } else {

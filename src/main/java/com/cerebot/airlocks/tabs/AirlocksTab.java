@@ -14,6 +14,6 @@ public class AirlocksTab extends CreativeTabs {
     }
     @Override
     public ItemStack getTabIconItem() {
-        return new ItemStack(ModBlocks.AIRLOCK_CONSOLE_BLOCK);
+        return new ItemStack(ModBlocks.BLOCK_AIRLOCK_CONSOLE);
     }
 }
