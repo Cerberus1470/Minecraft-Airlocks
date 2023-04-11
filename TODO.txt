@@ -20,3 +20,8 @@ Walkways
 Doors
 - 1x2, 2x2, variable like a painting.
 - Animated model? Probably not.
+
+Poster
+- Main visual - Complete airlock
+- Little visuals - Each and every part.
+- Text: Background accompanying main visual, tiny texts for each part of the small visuals.
