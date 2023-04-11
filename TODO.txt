@@ -1,0 +1,22 @@
+TODO List
+- is a list entry
+> means complete
+X means rejected
+! means important
+
+Airlock Console
+- Animated texture 0% -> 100% for the console
+- Link to Canvas.
+- GUI interface?
+
+Canvas
+- Proprietary inter-device intra-airlock connection system
+- Canvas corner blocks
+
+Walkways
+- Lighting
+- Activation via console?
+
+Doors
+- 1x2, 2x2, variable like a painting.
+- Animated model? Probably not.
