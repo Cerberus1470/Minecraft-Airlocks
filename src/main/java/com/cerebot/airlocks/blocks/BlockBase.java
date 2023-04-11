@@ -1,6 +1,6 @@
 package com.cerebot.airlocks.blocks;
 
-import com.cerebot.airlocks.Main;
+import com.cerebot.airlocks.Airlocks;
 import com.cerebot.airlocks.init.ModBlocks;
 import com.cerebot.airlocks.init.ModItems;
 import com.cerebot.airlocks.util.IHasModel;
@@ -17,7 +17,7 @@ public class BlockBase extends Block implements IHasModel {
         super(material);
         setUnlocalizedName(name);
         setRegistryName(name);
-        setCreativeTab(Main.airlocks_tab);
+        setCreativeTab(Airlocks.airlocks_tab);
 
         ModBlocks.BLOCKS.add(this);
         ModItems.ITEMS.add(new ItemBlock(this).setRegistryName(Objects.requireNonNull(this.getRegistryName())));
@@ -25,6 +25,6 @@ public class BlockBase extends Block implements IHasModel {
 
     @Override
     public void registerModels() {
-        Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+        Airlocks.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
     }
 }

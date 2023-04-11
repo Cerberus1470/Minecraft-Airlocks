@@ -16,7 +16,7 @@ public class BlockCanvas extends BlockBase{
     public BlockCanvas(String name, Material material) {
         super(name, material);
 
-        setSoundType(SoundType.METAL);
+        setSoundType(SoundType.CLOTH);
         setHardness(5.0F);
         setResistance(20.0F);
         setHarvestLevel("pickaxe", 2);
@@ -26,10 +26,6 @@ public class BlockCanvas extends BlockBase{
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        System.out.println("The facing value is: " + facing);
-        if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
-            return this.getDefaultState();
-        }
         return this.getDefaultState();
     }
 

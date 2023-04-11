@@ -11,10 +11,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION)
-public class Main {
+public class Airlocks {
 
     @Mod.Instance
-    public static Main instance;
+    public static Airlocks instance;
 
     public static final CreativeTabs airlocks_tab = new AirlocksTab("airlocks_tab");
 
