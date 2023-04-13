@@ -1,5 +1,11 @@
 {
   "variants": {
-    "normal": {"model":  "airlocks:block_canvas"}
+    "canvas_signal=false": {
+      "model": "airlocks:block_canvas"
+    },
+    "canvas_signal=true": {
+      "model": "airlocks:block_canvas",
+      "y": 90
+    }
   }
 }

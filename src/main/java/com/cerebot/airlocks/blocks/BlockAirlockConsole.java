@@ -1,5 +1,6 @@
 package com.cerebot.airlocks.blocks;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -14,6 +15,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import static com.cerebot.airlocks.blocks.BlockCanvas.CANVAS_SIGNAL;
 
 @SuppressWarnings({"NullableProblems", "deprecation"})
 public class BlockAirlockConsole extends BlockBase {
@@ -42,11 +45,24 @@ public class BlockAirlockConsole extends BlockBase {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        System.out.println("The facing value is: " + facing);
+        System.out.println("The facing value is: " + facing + " and the opposite side is " + (facing.getHorizontalIndex() + 2));
+        EnumFacing final_facing = facing;
+//        int index = facing.getHorizontalIndex();
+//        if (index == -1) {
+//            index = 0;
+//        }
+//        int index = Math.max(facing.getHorizontalIndex(), 0);
+//        BlockPos[] adjacent_blocks = {pos.north(),
+//                                        pos.east(),
+//                                        pos.south(),
+//                                        pos.west()};
+//        if (world.getBlockState(adjacent_blocks[index]).getBlock().getLocalizedName().toLowerCase().contains("canvas")) {
+//            System.out.println("I am attached to a canvas block!");
+//        }
         if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
-            return this.getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(PRESSURIZED, false);
+            final_facing = EnumFacing.NORTH;
         }
-        return this.getDefaultState().withProperty(FACING, facing).withProperty(PRESSURIZED, false);
+        return this.getDefaultState().withProperty(FACING, final_facing).withProperty(PRESSURIZED, false);
     }
 
     @Override
@@ -84,14 +100,42 @@ public class BlockAirlockConsole extends BlockBase {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+//        super.onBlockActivated(world, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+//        int index = Math.max(facing.getHorizontalIndex(), 0);
+//        BlockPos[] adjacent_blocks = {pos.north(),
+//                pos.east(),
+//                pos.south(),
+//                pos.west()};
+//        if (world.getBlockState(adjacent_blocks[index]).getBlock().getLocalizedName().toLowerCase().contains("canvas")) {
+//            System.out.println("I am attached to a canvas block!");
+//        }
 //        System.out.println("Hello, the airlock console has been changed to " + state.getValue(PRESSURIZED));
         if (state.getValue(PRESSURIZED)) {
-            worldIn.setBlockState(pos, state.withProperty(PRESSURIZED, false));
+//            if (CONNECTED_CANVAS != null) {
+//                world.setBlockState(CONNECTED_CANVAS, world.getBlockState(CONNECTED_CANVAS).withProperty(CANVAS_SIGNAL, true));
+//                BlockCanvas.updateSignal(world);
+//            }
+            world.setBlockState(pos, state.withProperty(PRESSURIZED, false));
         } else {
-            worldIn.setBlockState(pos, state.withProperty(PRESSURIZED, true));
+//            if (CONNECTED_CANVAS != null) {
+//                world.setBlockState(CONNECTED_CANVAS, world.getBlockState(CONNECTED_CANVAS).withProperty(CANVAS_SIGNAL, false));
+//            }
+            world.setBlockState(pos, state.withProperty(PRESSURIZED, true));
         }
         return true;
+    }
+
+    @Override
+    public void observedNeighborChange(IBlockState observer, World world, BlockPos observer_pos, Block observed, BlockPos observed_pos) {
+        if (observer.getBlock() instanceof BlockAirlockConsole && world.getBlockState(observed_pos).getBlock() instanceof BlockCanvas) {
+            if (world.getBlockState(observed_pos).getValue(CANVAS_SIGNAL)) {
+                System.out.println("The observed canvas is transmitting!");
+                world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(PRESSURIZED, true));
+            } else {
+//                System.out.println("The observed canvas has stopped transmitting!");
+                world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(PRESSURIZED, false));
+            }
+        }
     }
 }

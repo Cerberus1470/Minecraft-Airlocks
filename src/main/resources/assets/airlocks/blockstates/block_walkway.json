@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "airlocks:block_walkway"
+    },
+    "facing=west": {
+      "model": "airlocks:block_walkway",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "airlocks:block_walkway",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "airlocks:block_walkway",
+      "y": 270
+    }
+  }
+}

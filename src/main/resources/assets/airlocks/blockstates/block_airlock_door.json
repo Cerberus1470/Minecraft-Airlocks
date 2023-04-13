@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "facing=east,half=lower,open=false":  { "model": "airlock_door_bottom" },
+        "facing=south,half=lower,open=false": { "model": "airlock_door_bottom", "y": 90 },
+        "facing=west,half=lower,open=false":  { "model": "airlock_door_bottom", "y": 180 },
+        "facing=north,half=lower,open=false": { "model": "airlock_door_bottom", "y": 270 },
+        "facing=east,half=lower,open=true":  { "model": "airlock_door_bottom", "y": 90 },
+        "facing=south,half=lower,open=true": { "model": "airlock_door_bottom", "y": 180 },
+        "facing=west,half=lower,open=true":  { "model": "airlock_door_bottom", "y": 270 },
+        "facing=north,half=lower,open=true": { "model": "airlock_door_bottom" },
+        "facing=east,half=upper,open=false":  { "model": "airlock_door_top" },
+        "facing=south,half=upper,open=false": { "model": "airlock_door_top", "y": 90 },
+        "facing=west,half=upper,open=false":  { "model": "airlock_door_top", "y": 180 },
+        "facing=north,half=upper,open=false": { "model": "airlock_door_top", "y": 270 },
+        "facing=east,half=upper,open=true":  { "model": "airlock_door_top", "y": 90 },
+        "facing=south,half=upper,open=true": { "model": "airlock_door_top", "y": 180 },
+        "facing=west,half=upper,open=true":  { "model": "airlock_door_top", "y": 270 },
+        "facing=north,half=upper,open=true": { "model": "airlock_door_top" }
+    }
+}
