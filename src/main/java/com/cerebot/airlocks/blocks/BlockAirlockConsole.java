@@ -29,7 +29,7 @@ public class BlockAirlockConsole extends BlockBase {
     };
 
 
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final PropertyBool PRESSURIZED = PropertyBool.create("pressurized");
 
     public BlockAirlockConsole(String name, Material material) {
@@ -47,18 +47,6 @@ public class BlockAirlockConsole extends BlockBase {
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         System.out.println("The facing value is: " + facing + " and the opposite side is " + (facing.getHorizontalIndex() + 2));
         EnumFacing final_facing = facing;
-//        int index = facing.getHorizontalIndex();
-//        if (index == -1) {
-//            index = 0;
-//        }
-//        int index = Math.max(facing.getHorizontalIndex(), 0);
-//        BlockPos[] adjacent_blocks = {pos.north(),
-//                                        pos.east(),
-//                                        pos.south(),
-//                                        pos.west()};
-//        if (world.getBlockState(adjacent_blocks[index]).getBlock().getLocalizedName().toLowerCase().contains("canvas")) {
-//            System.out.println("I am attached to a canvas block!");
-//        }
         if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
             final_facing = EnumFacing.NORTH;
         }
@@ -67,12 +55,27 @@ public class BlockAirlockConsole extends BlockBase {
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(FACING).getHorizontalIndex();
+        return ((state.getValue(PRESSURIZED) ? 0 : 1) * 4) + (state.getValue(FACING).getHorizontalIndex());
+//        if (!(state.getValue(PRESSURIZED))) { // Pressurized is False
+//            switch (state.getValue(FACING)) { // Switching direction
+//                case NORTH:
+//                    return 0;
+//                case EAST:
+//                    return 1;
+//                case SOUTH:
+//                    return 2;
+//                case WEST:
+//                    return 3;
+//            }
+//        }
+//        return 0;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta)).withProperty(PRESSURIZED, false);
+        boolean pressurized = (meta / 4) == 1;
+        EnumFacing facing = EnumFacing.getHorizontal(meta % 4);
+        return getDefaultState().withProperty(FACING, facing).withProperty(PRESSURIZED, pressurized);
     }
 
     @Override
@@ -101,26 +104,9 @@ public class BlockAirlockConsole extends BlockBase {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-//        super.onBlockActivated(world, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-//        int index = Math.max(facing.getHorizontalIndex(), 0);
-//        BlockPos[] adjacent_blocks = {pos.north(),
-//                pos.east(),
-//                pos.south(),
-//                pos.west()};
-//        if (world.getBlockState(adjacent_blocks[index]).getBlock().getLocalizedName().toLowerCase().contains("canvas")) {
-//            System.out.println("I am attached to a canvas block!");
-//        }
-//        System.out.println("Hello, the airlock console has been changed to " + state.getValue(PRESSURIZED));
         if (state.getValue(PRESSURIZED)) {
-//            if (CONNECTED_CANVAS != null) {
-//                world.setBlockState(CONNECTED_CANVAS, world.getBlockState(CONNECTED_CANVAS).withProperty(CANVAS_SIGNAL, true));
-//                BlockCanvas.updateSignal(world);
-//            }
             world.setBlockState(pos, state.withProperty(PRESSURIZED, false));
         } else {
-//            if (CONNECTED_CANVAS != null) {
-//                world.setBlockState(CONNECTED_CANVAS, world.getBlockState(CONNECTED_CANVAS).withProperty(CANVAS_SIGNAL, false));
-//            }
             world.setBlockState(pos, state.withProperty(PRESSURIZED, true));
         }
         return true;
@@ -129,13 +115,22 @@ public class BlockAirlockConsole extends BlockBase {
     @Override
     public void observedNeighborChange(IBlockState observer, World world, BlockPos observer_pos, Block observed, BlockPos observed_pos) {
         if (observer.getBlock() instanceof BlockAirlockConsole && world.getBlockState(observed_pos).getBlock() instanceof BlockCanvas) {
-            if (world.getBlockState(observed_pos).getValue(CANVAS_SIGNAL)) {
-                System.out.println("The observed canvas is transmitting!");
-                world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(PRESSURIZED, true));
-            } else {
+
+            System.out.println("The observed_pos is " + observed_pos + " and the adjacent block is " + this.getConnectedCanvas(observer, observer_pos));
+            if (observed_pos.equals(this.getConnectedCanvas(observer, observer_pos))) {
+                if (world.getBlockState(observed_pos).getValue(CANVAS_SIGNAL)) {
+//                System.out.println("The observed canvas is transmitting!");
+                    world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(PRESSURIZED, true));
+                } else {
 //                System.out.println("The observed canvas has stopped transmitting!");
-                world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(PRESSURIZED, false));
+                    world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(PRESSURIZED, false));
+                }
             }
         }
+    }
+
+    public BlockPos getConnectedCanvas(IBlockState state, BlockPos observer_pos) {
+        BlockPos[] adjacent_blocks = {observer_pos.north(), observer_pos.east(), observer_pos.south(), observer_pos.west()};
+        return adjacent_blocks[state.getValue(FACING).getHorizontalIndex()];
     }
 }
