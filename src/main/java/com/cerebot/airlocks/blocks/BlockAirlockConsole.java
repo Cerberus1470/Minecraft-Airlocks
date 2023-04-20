@@ -31,6 +31,7 @@ public class BlockAirlockConsole extends BlockBase {
 
     private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final PropertyBool PRESSURIZED = PropertyBool.create("pressurized");
+//    public static final PropertyInteger STATUS_PRESSURE = PropertyInteger.create("status_pressure", 0,3);
 
     public BlockAirlockConsole(String name, Material material) {
         super(name, material);
@@ -50,32 +51,19 @@ public class BlockAirlockConsole extends BlockBase {
         if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
             final_facing = EnumFacing.NORTH;
         }
-        return this.getDefaultState().withProperty(FACING, final_facing).withProperty(PRESSURIZED, false);
+        return this.getDefaultState().withProperty(FACING, final_facing);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
         return ((state.getValue(PRESSURIZED) ? 0 : 1) * 4) + (state.getValue(FACING).getHorizontalIndex());
-//        if (!(state.getValue(PRESSURIZED))) { // Pressurized is False
-//            switch (state.getValue(FACING)) { // Switching direction
-//                case NORTH:
-//                    return 0;
-//                case EAST:
-//                    return 1;
-//                case SOUTH:
-//                    return 2;
-//                case WEST:
-//                    return 3;
-//            }
-//        }
-//        return 0;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        boolean pressurized = (meta / 4) == 1;
+        boolean stat_press = (meta / 4) == 1;
         EnumFacing facing = EnumFacing.getHorizontal(meta % 4);
-        return getDefaultState().withProperty(FACING, facing).withProperty(PRESSURIZED, pressurized);
+        return getDefaultState().withProperty(FACING, facing).withProperty(PRESSURIZED, stat_press);
     }
 
     @Override
@@ -110,6 +98,17 @@ public class BlockAirlockConsole extends BlockBase {
             world.setBlockState(pos, state.withProperty(PRESSURIZED, true));
         }
         return true;
+//        state.cycleProperty(PRESSURIZED);
+//        switch (state.getValue(STATUS_PRESSURE)) {
+//            case 0:
+//                world.setBlockState(pos, state.withProperty(STATUS_PRESSURE, 1));
+//            case 1:
+//                world.setBlockState(pos, state.withProperty(STATUS_PRESSURE, 2));
+//            case 2:
+//                world.setBlockState(pos, state.withProperty(STATUS_PRESSURE, 3));
+//            case 3:
+//                world.setBlockState(pos, state.withProperty(STATUS_PRESSURE, 0));
+//        }
     }
 
     @Override
