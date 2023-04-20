@@ -23,12 +23,36 @@ public class BlockCanvas extends BlockBase {
     private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final PropertyBool CANVAS_SIGNAL = PropertyBool.create("canvas_signal");
     private static final PropertyBool CORNER = PropertyBool.create("corner");
+//    public static final PropertyEnum<Corner_Half> HALF = PropertyEnum.create("half", Corner_Half.class);
     private static final AxisAlignedBB CANVAS_FULL_AABB = new AxisAlignedBB(0.0D,0.0D,0.0D,1.0D,1.0D,1.0D);
     private static final AxisAlignedBB[] CANVAS_CORNER_AABB = {new AxisAlignedBB(0.0D,0.0D,0.5D,1.0D,0.5D,1.0D), // SOUTH
                                                             new AxisAlignedBB(0.0D,0.0D,0.0D,0.5D,0.5D,1.0D), // WEST
                                                             new AxisAlignedBB(0.0D,0.0D,0.0D,1.0D,0.5D,0.5D), // NORTH
                                                             new AxisAlignedBB(0.5D,0.0D,0.0D,1.0D,0.5D,1.0D) // EAST
     };
+
+//    public static enum Corner_Half implements IStringSerializable
+//    {
+//        TOP("top"),
+//        BOTTOM("bottom");
+//
+//        private final String name;
+//
+//        private Corner_Half(String name)
+//        {
+//            this.name = name;
+//        }
+//
+//        public String toString()
+//        {
+//            return this.name;
+//        }
+//
+//        public String getName()
+//        {
+//            return this.name;
+//        }
+//    }
     public BlockCanvas(String name, Material material) {
         super(name, material);
 
@@ -45,15 +69,15 @@ public class BlockCanvas extends BlockBase {
         EnumFacing new_facing = EnumFacing.NORTH;
         boolean corner = false;
         if (world.getBlockState(pos.down()).getBlock() instanceof BlockCanvas) {
-            if (world.getBlockState(pos.north()).getBlock() instanceof BlockCanvas) {
+            if (world.getBlockState(pos.north()).getBlock() instanceof BlockCanvas && placer.getHorizontalFacing() == EnumFacing.NORTH) {
                 corner = true;
-            } else if (world.getBlockState(pos.east()).getBlock() instanceof BlockCanvas) {
+            } else if (world.getBlockState(pos.east()).getBlock() instanceof BlockCanvas&& placer.getHorizontalFacing() == EnumFacing.EAST) {
                 corner = true;
                 new_facing = EnumFacing.EAST;
-            } else if (world.getBlockState(pos.south()).getBlock() instanceof BlockCanvas) {
+            } else if (world.getBlockState(pos.south()).getBlock() instanceof BlockCanvas&& placer.getHorizontalFacing() == EnumFacing.SOUTH) {
                 corner = true;
                 new_facing = EnumFacing.SOUTH;
-            } else if (world.getBlockState(pos.west()).getBlock() instanceof BlockCanvas) {
+            } else if (world.getBlockState(pos.west()).getBlock() instanceof BlockCanvas&& placer.getHorizontalFacing() == EnumFacing.WEST) {
                 corner = true;
                 new_facing = EnumFacing.WEST;
             }
@@ -87,56 +111,6 @@ public class BlockCanvas extends BlockBase {
     @Override
     public int getMetaFromState(IBlockState state) {
         return ((state.getValue(CANVAS_SIGNAL) ? 1 : 0) * 8) + ((state.getValue(CORNER) ? 1 : 0) * 4) + (state.getValue(FACING).getHorizontalIndex());
-//        if (!(state.getValue(CANVAS_SIGNAL))) { // Canvas_Signal is False
-//            if (!(state.getValue(CORNER))) { // Corner is False
-//                switch (state.getValue(FACING)) { // Switching direction
-//                    case NORTH:
-//                        return 0;
-//                    case EAST:
-//                        return 1;
-//                    case SOUTH:
-//                        return 2;
-//                    case WEST:
-//                        return 3;
-//                }
-//            } else { // Corner is True
-//                switch (state.getValue(FACING)) { // Switching direction
-//                    case NORTH:
-//                        return 4;
-//                    case EAST:
-//                        return 5;
-//                    case SOUTH:
-//                        return 6;
-//                    case WEST:
-//                        return 7;
-//                }
-//            }
-//        } else { // Canvas_Signal is True
-//            if (!(state.getValue(CORNER))) { // Corner is False
-//                switch (state.getValue(FACING)) { // Switching direction
-//                    case NORTH:
-//                        return 8;
-//                    case EAST:
-//                        return 9;
-//                    case SOUTH:
-//                        return 10;
-//                    case WEST:
-//                        return 11;
-//                }
-//            } else { // Corner is True
-//                switch (state.getValue(FACING)) { // Switching direction
-//                    case NORTH:
-//                        return 12;
-//                    case EAST:
-//                        return 13;
-//                    case SOUTH:
-//                        return 14;
-//                    case WEST:
-//                        return 15;
-//                }
-//            }
-//        }
-//        return 0;
     }
 
     @Override
