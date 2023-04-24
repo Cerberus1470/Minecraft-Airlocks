@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,10 +15,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 import static com.cerebot.airlocks.blocks.BlockCanvas.CANVAS_SIGNAL;
 
-@SuppressWarnings({"NullableProblems", "deprecation"})
-public class BlockAirlockConsole extends BlockBase {
+@SuppressWarnings({"NullableProblems"})
+public class BlockAirlockConsole extends BlockButtonBase {
 
     public static final AxisAlignedBB[] AIRLOCK_CONSOLE_AABB = {
             new AxisAlignedBB(0.1875D, 0.0625D, 0D, 0.8125D, 0.9375D, 0.0625D), //South
@@ -29,7 +30,7 @@ public class BlockAirlockConsole extends BlockBase {
     };
 
 
-    private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+//    private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final PropertyBool PRESSURIZED = PropertyBool.create("pressurized");
 //    public static final PropertyInteger STATUS_PRESSURE = PropertyInteger.create("status_pressure", 0,3);
 
@@ -41,7 +42,7 @@ public class BlockAirlockConsole extends BlockBase {
         setResistance(20.0F);
         setHarvestLevel("pickaxe", 2);
         setLightLevel(0.8F);
-        setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(PRESSURIZED, false));
+        setDefaultState(this.blockState.getBaseState().withProperty(POWERED, false).withProperty(PRESSURIZED, false));
     }
 
     @Override
@@ -56,19 +57,21 @@ public class BlockAirlockConsole extends BlockBase {
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return ((state.getValue(PRESSURIZED) ? 0 : 1) * 4) + (state.getValue(FACING).getHorizontalIndex());
+        return ((state.getValue(POWERED) ? 1 : 0) * 8) + ((state.getValue(PRESSURIZED) ? 1 : 0) * 4) +
+                (((state.getValue(FACING) == EnumFacing.DOWN || state.getValue(FACING) == EnumFacing.UP) ? EnumFacing.NORTH : state.getValue(FACING)).getHorizontalIndex());
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
+        boolean powered = (meta / 8) == 1;
         boolean stat_press = (meta / 4) == 1;
         EnumFacing facing = EnumFacing.getHorizontal(meta % 4);
-        return getDefaultState().withProperty(FACING, facing).withProperty(PRESSURIZED, stat_press);
+        return getDefaultState().withProperty(FACING, facing).withProperty(PRESSURIZED, stat_press).withProperty(POWERED, powered);
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING, PRESSURIZED);
+        return new BlockStateContainer(this, FACING, POWERED, PRESSURIZED);
     }
 
     @Override
@@ -91,24 +94,46 @@ public class BlockAirlockConsole extends BlockBase {
     }
 
     @Override
+    public int tickRate(World world) {
+        return 80;
+    }
+    @Override
+    public boolean canProvidePower(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public int getWeakPower(IBlockState p_180656_1_, IBlockAccess p_180656_2_, BlockPos p_180656_3_, EnumFacing p_180656_4_) {
+        return 0;
+    }
+
+    @Override
+    public int getStrongPower(IBlockState p_176211_1_, IBlockAccess p_176211_2_, BlockPos p_176211_3_, EnumFacing p_176211_4_) {
+        return 0;
+    }
+
+    @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (state.getValue(PRESSURIZED)) {
-            world.setBlockState(pos, state.withProperty(PRESSURIZED, false));
-        } else {
-            world.setBlockState(pos, state.withProperty(PRESSURIZED, true));
-        }
-        return true;
-//        state.cycleProperty(PRESSURIZED);
-//        switch (state.getValue(STATUS_PRESSURE)) {
-//            case 0:
-//                world.setBlockState(pos, state.withProperty(STATUS_PRESSURE, 1));
-//            case 1:
-//                world.setBlockState(pos, state.withProperty(STATUS_PRESSURE, 2));
-//            case 2:
-//                world.setBlockState(pos, state.withProperty(STATUS_PRESSURE, 3));
-//            case 3:
-//                world.setBlockState(pos, state.withProperty(STATUS_PRESSURE, 0));
+        super.onBlockActivated(world, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+//        if (state.getValue(POWERED)) {
+//            return true;
+//        } else {
+//            state = state.withProperty(POWERED, true);
 //        }
+        System.out.println("Actually I need to check my schedule!");
+//        world.setBlockState(pos, state);
+        return true;
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        IBlockState final_state = state.withProperty(POWERED, false);
+        if (state.getValue(PRESSURIZED)) {
+            final_state = final_state.withProperty(PRESSURIZED, false);
+        } else {
+            final_state = final_state.withProperty(PRESSURIZED, true);
+        }
+        world.setBlockState(pos, final_state);
     }
 
     @Override
@@ -119,10 +144,11 @@ public class BlockAirlockConsole extends BlockBase {
             if (observed_pos.equals(this.getConnectedCanvas(observer, observer_pos))) {
                 if (world.getBlockState(observed_pos).getValue(CANVAS_SIGNAL)) {
 //                System.out.println("The observed canvas is transmitting!");
-                    world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(PRESSURIZED, true));
+//                    super.onBlockActivated(world, observer_pos, observer, playerIn, hand, facing, hitX, hitY, hitZ);
+                    world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(POWERED, true));
                 } else {
 //                System.out.println("The observed canvas has stopped transmitting!");
-                    world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(PRESSURIZED, false));
+                    world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(POWERED, false));
                 }
             }
         }
