@@ -6,8 +6,10 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -63,5 +65,27 @@ public class BlockWalkway extends BlockBase {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState p_185496_1_, IBlockAccess p_185496_2_, BlockPos p_185496_3_) {
         return Walkway_AABB;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer placer, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        float particlePosX = pos.getX();
+        float particlePosY = pos.getY();
+        float particlePosZ = pos.getZ();
+//        float particleSize0 = 0.52F;
+//        float particleSize1 = 1.0F;
+        for (int i=0;i<50;i++) {
+            switch (state.getValue(FACING)) {
+                case NORTH:
+                case SOUTH:
+                    world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX, particlePosY + 1.01F, particlePosZ + 0.5F, 0.3D, 0.5D, 0.0D);
+                    world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 1.0F, particlePosY + 1.01F, particlePosZ + 0.5F, -0.3D, 0.5D, 0.0D);
+                case EAST:
+                case WEST:
+                    world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 0.5F, particlePosY + 1.01F, particlePosZ, 0.0D, 0.5D, 0.3D);
+                    world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 0.5F, particlePosY + 1.01F, particlePosZ + 1.0F, 0.0D, 0.5D, -0.3D);
+            }
+        }
+        return true;
     }
 }

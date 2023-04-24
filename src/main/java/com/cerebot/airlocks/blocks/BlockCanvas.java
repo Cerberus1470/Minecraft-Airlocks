@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import static com.cerebot.airlocks.blocks.BlockAirlockConsole.PRESSURIZED;
+import static net.minecraft.block.BlockButton.POWERED;
 
 @SuppressWarnings({"NullableProblems", "deprecation"})
 public class BlockCanvas extends BlockBase {
@@ -141,7 +141,7 @@ public class BlockCanvas extends BlockBase {
         if (observer.getBlock() instanceof BlockCanvas && world.getBlockState(observed_pos).getBlock() instanceof BlockAirlockConsole) {
             System.out.println("Console attached/changed!");
             if (observer_pos.equals(((BlockAirlockConsole) world.getBlockState(observed_pos).getBlock()).getConnectedCanvas(world.getBlockState(observed_pos), observed_pos))) {
-                if (world.getBlockState(observed_pos).getValue(PRESSURIZED)) {
+                if (world.getBlockState(observed_pos).getValue(POWERED)) {
                     world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(CANVAS_SIGNAL, true));
                 } else {
                     world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(CANVAS_SIGNAL, false));
