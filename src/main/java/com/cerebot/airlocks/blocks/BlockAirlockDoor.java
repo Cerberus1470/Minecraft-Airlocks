@@ -2,8 +2,6 @@ package com.cerebot.airlocks.blocks;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,8 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-@SuppressWarnings({"NullableProblems", "deprecation"})
-public class BlockAirlockDoor extends BlockBase {
+@SuppressWarnings("NullableProblems")
+public class BlockAirlockDoor extends BlockDoorBase {
 
     private static final AxisAlignedBB[] AIRLOCK_DOOR_AABB = {
             new AxisAlignedBB(0D,0D,0D,1D,2D,0.125D),
@@ -25,8 +23,8 @@ public class BlockAirlockDoor extends BlockBase {
             new AxisAlignedBB(0D,0D,1D,0.125D,2D,0D)
     };
 
-    private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-    private static final PropertyBool OPEN = PropertyBool.create("open");
+//    private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+//    private static final PropertyBool OPEN = PropertyBool.create("open");
 
     public BlockAirlockDoor(String name, Material material) {
         super(name, material);

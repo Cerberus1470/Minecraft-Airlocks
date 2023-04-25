@@ -6,6 +6,7 @@ item.ruby.name=Ruby
 tile.block_airlock_console.name=Airlock Console Block
 tile.block_canvas.name=Airlock Canvas
 tile.block_walkway.name=Airlock Walkway
+tile.block_airlock_door.name=Airlock Door
 
 #Tab
 itemGroup.airlocks_tab=Airlocks

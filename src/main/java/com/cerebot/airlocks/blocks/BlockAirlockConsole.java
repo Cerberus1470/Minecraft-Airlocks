@@ -42,17 +42,18 @@ public class BlockAirlockConsole extends BlockButtonBase {
         setResistance(20.0F);
         setHarvestLevel("pickaxe", 2);
         setLightLevel(0.8F);
-        setDefaultState(this.blockState.getBaseState().withProperty(POWERED, false).withProperty(PRESSURIZED, false));
+        setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, false).withProperty(PRESSURIZED, false));
     }
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        System.out.println("The facing value is: " + facing + " and the opposite side is " + (facing.getHorizontalIndex() + 2));
-        EnumFacing final_facing = facing;
-        if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
-            final_facing = EnumFacing.NORTH;
-        }
-        return this.getDefaultState().withProperty(FACING, final_facing);
+        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
+//        System.out.println("The facing value is: " + facing + " and the opposite side is " + (facing.getHorizontalIndex() + 2));
+//        EnumFacing final_facing = facing;
+//        if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
+//            final_facing = EnumFacing.NORTH;
+//        }
+//        return this.getDefaultState().withProperty(FACING, final_facing);
     }
 
     @Override
@@ -115,13 +116,7 @@ public class BlockAirlockConsole extends BlockButtonBase {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         super.onBlockActivated(world, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-//        if (state.getValue(POWERED)) {
-//            return true;
-//        } else {
-//            state = state.withProperty(POWERED, true);
-//        }
         System.out.println("Actually I need to check my schedule!");
-//        world.setBlockState(pos, state);
         return true;
     }
 

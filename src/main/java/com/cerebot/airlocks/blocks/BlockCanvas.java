@@ -30,29 +30,6 @@ public class BlockCanvas extends BlockBase {
                                                             new AxisAlignedBB(0.0D,0.0D,0.0D,1.0D,0.5D,0.5D), // NORTH
                                                             new AxisAlignedBB(0.5D,0.0D,0.0D,1.0D,0.5D,1.0D) // EAST
     };
-
-//    public static enum Corner_Half implements IStringSerializable
-//    {
-//        TOP("top"),
-//        BOTTOM("bottom");
-//
-//        private final String name;
-//
-//        private Corner_Half(String name)
-//        {
-//            this.name = name;
-//        }
-//
-//        public String toString()
-//        {
-//            return this.name;
-//        }
-//
-//        public String getName()
-//        {
-//            return this.name;
-//        }
-//    }
     public BlockCanvas(String name, Material material) {
         super(name, material);
 

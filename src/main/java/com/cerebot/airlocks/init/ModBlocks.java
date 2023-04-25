@@ -1,8 +1,6 @@
 package com.cerebot.airlocks.init;
 
-import com.cerebot.airlocks.blocks.BlockAirlockConsole;
-import com.cerebot.airlocks.blocks.BlockCanvas;
-import com.cerebot.airlocks.blocks.BlockWalkway;
+import com.cerebot.airlocks.blocks.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -19,5 +17,5 @@ public class ModBlocks {
 
     public static final Block BLOCK_WALKWAY = new BlockWalkway("block_walkway", Material.IRON);
 
-//    public static final Block BLOCK_AIRLOCK_DOOR = new BlockAirlockDoor("block_airlock_door", Material.IRON);
+    public static final Block BLOCK_AIRLOCK_DOOR = new BlockDoorBase("block_airlock_door", Material.ANVIL);
 }

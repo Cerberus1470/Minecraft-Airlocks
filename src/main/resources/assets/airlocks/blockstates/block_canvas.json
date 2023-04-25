@@ -1,6 +1,6 @@
 {
   "variants": {
-    "canvas_signal=false,corner=false,facing=north": {"model": "airlocks:stairs"},
+    "canvas_signal=false,corner=false,facing=north": {"model": "airlocks:block_canvas"},
     "canvas_signal=false,corner=false,facing=east": {"model": "airlocks:block_canvas"},
     "canvas_signal=false,corner=false,facing=south": {"model": "airlocks:block_canvas"},
     "canvas_signal=false,corner=false,facing=west": {"model": "airlocks:block_canvas"},
