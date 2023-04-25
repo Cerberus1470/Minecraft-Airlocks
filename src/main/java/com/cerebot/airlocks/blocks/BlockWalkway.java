@@ -109,18 +109,8 @@ public class BlockWalkway extends BlockButtonBase {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer placer, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         super.onBlockActivated(world, pos, state, placer, hand, facing, hitX, hitY, hitZ);
+        this.spawnParticles(world, pos, state);
 
-        float particlePosX = pos.getX();
-        float particlePosY = pos.getY();
-        float particlePosZ = pos.getZ();
-
-        if (state.getValue(FACING) == EnumFacing.NORTH || state.getValue(FACING) == EnumFacing.SOUTH) {
-            world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 0.5F, particlePosY + 1.01F, particlePosZ, 0.0D, 0.5D, 0.3D);
-            world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 0.5F, particlePosY + 1.01F, particlePosZ + 1.0F, 0.0D, 0.5D, -0.3D);
-        } else if (state.getValue(FACING) == EnumFacing.EAST || state.getValue(FACING) == EnumFacing.WEST) {
-            world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX, particlePosY + 1.01F, particlePosZ + 0.5F, 0.3D, 0.5D, 0.0D);
-            world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 1.0F, particlePosY + 1.01F, particlePosZ + 0.5F, -0.3D, 0.5D, 0.0D);
-        }
 //        float particlePosX = pos.getX();
 //        float particlePosY = pos.getY();
 //        float particlePosZ = pos.getZ();
@@ -140,11 +130,11 @@ public class BlockWalkway extends BlockButtonBase {
         return true;
     }
 
-    @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random random) {
+    private void spawnParticles(World world, BlockPos pos, IBlockState state) {
         float particlePosX = pos.getX();
         float particlePosY = pos.getY();
         float particlePosZ = pos.getZ();
+
         if (state.getValue(FACING) == EnumFacing.NORTH || state.getValue(FACING) == EnumFacing.SOUTH) {
             world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 0.5F, particlePosY + 1.01F, particlePosZ, 0.0D, 0.5D, 0.3D);
             world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 0.5F, particlePosY + 1.01F, particlePosZ + 1.0F, 0.0D, 0.5D, -0.3D);
@@ -152,6 +142,11 @@ public class BlockWalkway extends BlockButtonBase {
             world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX, particlePosY + 1.01F, particlePosZ + 0.5F, 0.3D, 0.5D, 0.0D);
             world.spawnParticle(EnumParticleTypes.CLOUD, particlePosX + 1.0F, particlePosY + 1.01F, particlePosZ + 0.5F, -0.3D, 0.5D, 0.0D);
         }
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random random) {
         world.setBlockState(pos, state.withProperty(POWERED, false));
+        this.spawnParticles(world, pos, state);
     }
 }
