@@ -1,17 +1,8 @@
 {
   "variants": {
-    "facing=south,powered=false": {"model":  "airlocks:block_walkway"},
-    "facing=west,powered=false": {"model":  "airlocks:block_walkway", "y": 90},
-    "facing=north,powered=false": {"model":  "airlocks:block_walkway", "y": 180},
-    "facing=east,powered=false": {"model":  "airlocks:block_walkway", "y": 270},
-    "facing=down,powered=false": {"model":  "airlocks:block_walkway", "y": 180},
-    "facing=up,powered=false": {"model":  "airlocks:block_walkway", "y": 180},
-
-    "facing=south,powered=true": {"model":  "airlocks:block_walkway"},
-    "facing=west,powered=true": {"model":  "airlocks:block_walkway", "y": 90},
-    "facing=north,powered=true": {"model":  "airlocks:block_walkway", "y": 180},
-    "facing=east,powered=true": {"model":  "airlocks:block_walkway", "y": 270},
-    "facing=down,powered=true": {"model":  "airlocks:block_walkway", "y": 180},
-    "facing=up,powered=true": {"model":  "airlocks:block_walkway", "y": 180}
+    "facing=south": {"model":  "airlocks:block_walkway"},
+    "facing=west": {"model":  "airlocks:block_walkway", "y": 90},
+    "facing=north": {"model":  "airlocks:block_walkway", "y": 180},
+    "facing=east": {"model":  "airlocks:block_walkway", "y": 270}
   }
 }

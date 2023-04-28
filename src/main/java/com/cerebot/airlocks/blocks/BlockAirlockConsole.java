@@ -1,8 +1,8 @@
 package com.cerebot.airlocks.blocks;
 
+import com.cerebot.airlocks.util.handlers.SoundsHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -10,11 +10,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 import static com.cerebot.airlocks.blocks.BlockCanvas.CANVAS_SIGNAL;
@@ -34,8 +36,8 @@ public class BlockAirlockConsole extends BlockButtonBase {
     public static final PropertyBool PRESSURIZED = PropertyBool.create("pressurized");
 //    public static final PropertyInteger STATUS_PRESSURE = PropertyInteger.create("status_pressure", 0,3);
 
-    public BlockAirlockConsole(String name, Material material) {
-        super(name, material);
+    public BlockAirlockConsole(String name) {
+        super(name);
 
         setSoundType(SoundType.METAL);
         setHardness(5.0F);
@@ -48,12 +50,6 @@ public class BlockAirlockConsole extends BlockButtonBase {
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
-//        System.out.println("The facing value is: " + facing + " and the opposite side is " + (facing.getHorizontalIndex() + 2));
-//        EnumFacing final_facing = facing;
-//        if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
-//            final_facing = EnumFacing.NORTH;
-//        }
-//        return this.getDefaultState().withProperty(FACING, final_facing);
     }
 
     @Override
@@ -94,6 +90,12 @@ public class BlockAirlockConsole extends BlockButtonBase {
         }
     }
 
+    @Nullable
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return this.getBoundingBox(state, source, pos);
+    }
+
     @Override
     public int tickRate(World world) {
         return 80;
@@ -121,21 +123,33 @@ public class BlockAirlockConsole extends BlockButtonBase {
     }
 
     @Override
+    protected void playClickSound(@Nullable EntityPlayer player, World worldIn, BlockPos pos) {
+        worldIn.playSound(player, pos, SoundsHandler.BLOCK_CONSOLE_KEYPRESS, SoundCategory.BLOCKS, 0.7F, 1.0F);
+        worldIn.playSound(player, pos, SoundsHandler.BLOCK_CONSOLE_PRESSURIZING, SoundCategory.BLOCKS, 1.0F, 1.0F);
+    }
+
+//    @Override
+//    protected void playReleaseSound(World worldIn, BlockPos pos) {
+//        worldIn.playSound(null, pos, SoundsHandler.BLOCK_CONSOLE_COMPLETE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+//    }
+
+    @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         IBlockState final_state = state.withProperty(POWERED, false);
-        if (state.getValue(PRESSURIZED)) {
-            final_state = final_state.withProperty(PRESSURIZED, false);
-        } else {
-            final_state = final_state.withProperty(PRESSURIZED, true);
-        }
+//        if (state.getValue(PRESSURIZED)) {
+//            final_state = final_state.withProperty(PRESSURIZED, false);
+//        } else {
+//            final_state = final_state.withProperty(PRESSURIZED, true);
+//        }
         world.setBlockState(pos, final_state);
+        world.playSound(null, pos, SoundsHandler.BLOCK_CONSOLE_COMPLETE, SoundCategory.BLOCKS, 1.0F, 1.0F);
     }
 
     @Override
     public void observedNeighborChange(IBlockState observer, World world, BlockPos observer_pos, Block observed, BlockPos observed_pos) {
         if (observer.getBlock() instanceof BlockAirlockConsole && world.getBlockState(observed_pos).getBlock() instanceof BlockCanvas) {
 
-            System.out.println("The observed_pos is " + observed_pos + " and the adjacent block is " + this.getConnectedCanvas(observer, observer_pos));
+//            System.out.println("The observed_pos is " + observed_pos + " and the adjacent block is " + this.getConnectedCanvas(observer, observer_pos));
             if (observed_pos.equals(this.getConnectedCanvas(observer, observer_pos))) {
                 if (world.getBlockState(observed_pos).getValue(CANVAS_SIGNAL)) {
 //                System.out.println("The observed canvas is transmitting!");
@@ -143,7 +157,14 @@ public class BlockAirlockConsole extends BlockButtonBase {
                     world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(POWERED, true));
                 } else {
 //                System.out.println("The observed canvas has stopped transmitting!");
-                    world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(POWERED, false));
+                    IBlockState final_state = world.getBlockState(observer_pos).withProperty(POWERED, false);
+//                    final_state.cycleProperty(PRESSURIZED);
+                    if (final_state.getValue(PRESSURIZED)) {
+                        final_state = final_state.withProperty(PRESSURIZED, false);
+                    } else {
+                        final_state = final_state.withProperty(PRESSURIZED, true);
+                    }
+                    world.setBlockState(observer_pos, final_state);
                 }
             }
         }

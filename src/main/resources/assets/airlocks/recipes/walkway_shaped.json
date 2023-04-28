@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+
+  "pattern":
+  [
+    "CIC",
+    "GRG",
+    "CIC"
+  ],
+
+  "key":
+  {
+    "C":
+    {
+      "item": "airlocks:block_canvas"
+    },
+    "I":
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    "G":
+    {
+      "item": "minecraft:glowstone"
+    },
+    "R":
+    {
+      "item": "minecraft:redstone"
+    }
+  },
+
+  "result":
+  {
+    "item": "airlocks:block_walkway",
+    "count": 4
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+
+  "pattern":
+  [
+    "BBB",
+    "BRB",
+    "BBB"
+  ],
+
+  "key":
+  {
+    "B":
+    {
+      "item": "minecraft:concrete",
+      "data": 15
+    },
+    "R":
+    {
+      "item": "minecraft:redstone"
+    }
+  },
+
+  "result":
+  {
+    "item": "airlocks:console_case",
+    "count": 2
+  }
+}

@@ -2,6 +2,7 @@ package com.cerebot.airlocks;
 
 import com.cerebot.airlocks.proxy.CommonProxy;
 import com.cerebot.airlocks.tabs.AirlocksTab;
+import com.cerebot.airlocks.util.handlers.RegistryHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import com.cerebot.airlocks.util.Reference;
@@ -24,7 +25,9 @@ public class Airlocks {
     @Mod.EventHandler
     public static void PreInit(FMLPreInitializationEvent event) {}
     @Mod.EventHandler
-    public static void init(FMLInitializationEvent event) {}
+    public static void init(FMLInitializationEvent event) {
+        RegistryHandler.initRegistries();
+    }
     @Mod.EventHandler
     public static void PostInit(FMLPostInitializationEvent event) {}
 }

@@ -2,21 +2,19 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"0": "airlocks:blocks/console_stable_pressurized",
-		"2": "airlocks:blocks/console_unstable_pressurizing",
-		"particle": "airlocks:blocks/console_stable_pressurized"
+		"2": "airlocks:blocks/console_unstable_pressurizing"
 	},
 	"elements": [
 		{
 			"from": [3, 1, 0],
 			"to": [13, 15, 1],
 			"faces": {
-				"north": {"uv": [0, 0, 0.125, 0.125], "texture": "#0"},
-				"east": {"uv": [0, 0, 0.125, 0.125], "texture": "#0"},
+				"north": {"uv": [0, 0, 0.125, 0.125], "texture": "#2"},
+				"east": {"uv": [0, 0, 0.125, 0.125], "texture": "#2"},
 				"south": {"uv": [2.75, 0, 13.25, 16], "texture": "#2"},
-				"west": {"uv": [0, 0, 0.125, 0.125], "texture": "#0"},
-				"up": {"uv": [0, 0, 0.125, 0.125], "texture": "#0"},
-				"down": {"uv": [0, 0, 0.125, 0.125], "texture": "#0"}
+				"west": {"uv": [0, 0, 0.125, 0.125], "texture": "#2"},
+				"up": {"uv": [0, 0, 0.125, 0.125], "texture": "#2"},
+				"down": {"uv": [0, 0, 0.125, 0.125], "texture": "#2"}
 			}
 		}
 	],

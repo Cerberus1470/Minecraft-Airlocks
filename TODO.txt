@@ -5,9 +5,10 @@ X means rejected
 ! means important
 
 Airlock Console
-- Animated texture 0% -> 100% for the console
+> - Animated texture 0% -> 100% for the console
 > - Link to Canvas.
 - GUI interface?
+- Add Pressure Unstable.
 
 Canvas
 - Proprietary inter-device intra-airlock connection system

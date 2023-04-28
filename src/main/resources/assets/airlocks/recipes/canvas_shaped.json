@@ -4,7 +4,7 @@
   "pattern":
   [
     " W ",
-    "WRW",
+    "WOW",
     " W "
   ],
 
@@ -12,12 +12,11 @@
   {
     "W":
     {
-      "item": "minecraft:wool",
-      "data": 0
+      "item": "airlocks:canvas_fabric"
     },
-    "R":
+    "O":
     {
-      "item": "minecraft:redstone"
+      "item": "minecraft:obsidian"
     }
   },
 

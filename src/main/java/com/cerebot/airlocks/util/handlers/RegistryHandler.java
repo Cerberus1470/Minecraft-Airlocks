@@ -33,4 +33,8 @@ public class RegistryHandler {
             }
         }
     }
+
+    public static void initRegistries() {
+        SoundsHandler.registerSounds();
+    }
 }

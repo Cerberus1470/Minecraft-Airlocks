@@ -1,9 +1,13 @@
 #Items
-item.airlock_console.name=Airlock Console
+item.airlock_console.name=Airlock Console Item
 item.ruby.name=Ruby
+item.canvas_fabric.name=Canvas Fabric
+item.console_case.name=Console Case
+item.console_screen.name=Console Screen
+item.console_board.name=Console Board
 
 #Blocks
-tile.block_airlock_console.name=Airlock Console Block
+tile.block_airlock_console.name=Airlock Console
 tile.block_canvas.name=Airlock Canvas
 tile.block_walkway.name=Airlock Walkway
 tile.block_airlock_door.name=Airlock Door

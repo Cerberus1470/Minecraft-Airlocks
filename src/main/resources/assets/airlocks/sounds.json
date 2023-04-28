@@ -1,0 +1,22 @@
+{
+  "block.console.keypress": {
+    "subtitle": "block.console.keypress",
+    "sounds": [{"name": "airlocks:block/console/keypress", "stream": true}]
+  },
+  "block.console.pressurizing": {
+    "subtitle": "block.console.pressurizing",
+    "sounds": [{"name": "airlocks:block/console/pressurizing", "stream": true}]
+  },
+  "block.console.complete": {
+    "subtitle": "block.console.complete",
+    "sounds": [{"name": "airlocks:block/console/complete", "stream": true}]
+  },
+  "block.door.open": {
+    "subtitle": "block.door.open",
+    "sounds": [{"name": "airlocks:block/door/door_open", "stream": true}]
+  },
+  "block.door.close": {
+    "subtitle": "block.door.close",
+    "sounds": [{"name": "airlocks:block/door/door_close", "stream": true}]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "type": "minecraft:crafting_shaped",
+
+  "pattern":
+  [
+    "IGC",
+    "OLO",
+    "IRC"
+  ],
+
+  "key":
+  {
+    "I":
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    "G":
+    {
+      "item": "minecraft:glass"
+    },
+    "C":
+    {
+      "item": "airlocks:block_canvas"
+    },
+    "O":
+    {
+      "item": "minecraft:obsidian"
+    },
+    "L":
+    {
+      "item": "minecraft:lever"
+    },
+    "R":
+    {
+      "item": "minecraft:redstone"
+    }
+  },
+
+  "result":
+  {
+    "item": "airlocks:block_airlock_door",
+    "count": 2
+  }
+}

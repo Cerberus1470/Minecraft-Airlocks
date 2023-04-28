@@ -45,16 +45,16 @@ public class BlockCanvas extends BlockBase {
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         EnumFacing new_facing = EnumFacing.NORTH;
         boolean corner = false;
-        if (world.getBlockState(pos.down()).getBlock() instanceof BlockCanvas) {
-            if (world.getBlockState(pos.north()).getBlock() instanceof BlockCanvas && placer.getHorizontalFacing() == EnumFacing.NORTH) {
+        if (world.getBlockState(pos.down()).getBlock() instanceof BlockCanvas && !world.getBlockState(pos.down()).getValue(CORNER)) {
+            if (world.getBlockState(pos.north()).getBlock() instanceof BlockCanvas && !world.getBlockState(pos.north()).getValue(CORNER) && placer.getHorizontalFacing() == EnumFacing.NORTH) {
                 corner = true;
-            } else if (world.getBlockState(pos.east()).getBlock() instanceof BlockCanvas&& placer.getHorizontalFacing() == EnumFacing.EAST) {
+            } else if (world.getBlockState(pos.east()).getBlock() instanceof BlockCanvas && !world.getBlockState(pos.east()).getValue(CORNER) && placer.getHorizontalFacing() == EnumFacing.EAST) {
                 corner = true;
                 new_facing = EnumFacing.EAST;
-            } else if (world.getBlockState(pos.south()).getBlock() instanceof BlockCanvas&& placer.getHorizontalFacing() == EnumFacing.SOUTH) {
+            } else if (world.getBlockState(pos.south()).getBlock() instanceof BlockCanvas && !world.getBlockState(pos.south()).getValue(CORNER) && placer.getHorizontalFacing() == EnumFacing.SOUTH) {
                 corner = true;
                 new_facing = EnumFacing.SOUTH;
-            } else if (world.getBlockState(pos.west()).getBlock() instanceof BlockCanvas&& placer.getHorizontalFacing() == EnumFacing.WEST) {
+            } else if (world.getBlockState(pos.west()).getBlock() instanceof BlockCanvas && !world.getBlockState(pos.west()).getValue(CORNER) && placer.getHorizontalFacing() == EnumFacing.WEST) {
                 corner = true;
                 new_facing = EnumFacing.WEST;
             }
@@ -76,13 +76,13 @@ public class BlockCanvas extends BlockBase {
     }
 
     @Override
-    public boolean isFullCube(IBlockState p_149686_1_) {
-        return false;
+    public boolean isFullCube(IBlockState state) {
+        return !state.getValue(CORNER);
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState p_149662_1_) {
-        return false;
+    public boolean isOpaqueCube(IBlockState state) {
+        return !state.getValue(CORNER);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class BlockCanvas extends BlockBase {
         }
 //        System.out.println("The observer is " + observer.getBlock() + "and the observed is " + observed);
         if (observer.getBlock() instanceof BlockCanvas && world.getBlockState(observed_pos).getBlock() instanceof BlockAirlockConsole) {
-            System.out.println("Console attached/changed!");
+//            System.out.println("Console attached/changed!");
             if (observer_pos.equals(((BlockAirlockConsole) world.getBlockState(observed_pos).getBlock()).getConnectedCanvas(world.getBlockState(observed_pos), observed_pos))) {
                 if (world.getBlockState(observed_pos).getValue(POWERED)) {
                     world.setBlockState(observer_pos, world.getBlockState(observer_pos).withProperty(CANVAS_SIGNAL, true));

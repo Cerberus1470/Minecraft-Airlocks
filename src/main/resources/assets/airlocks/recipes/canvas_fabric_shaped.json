@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+
+  "pattern":
+  [
+    "WSW",
+    "SRS",
+    "WSW"
+  ],
+
+  "key":
+  {
+    "W":
+    {
+      "item": "minecraft:wool",
+      "data": 0
+    },
+    "R":
+    {
+      "item": "minecraft:redstone"
+    },
+    "S":
+    {
+      "item": "minecraft:string"
+    }
+  },
+
+  "result":
+  {
+    "item": "airlocks:canvas_fabric",
+    "count": 4
+  }
+}
