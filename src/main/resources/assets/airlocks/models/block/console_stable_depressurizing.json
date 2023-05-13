@@ -1,7 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"2": "airlocks:blocks/console_unstable_depressurizing"
+		"2": "airlocks:blocks/console/console_unstable_depressurizing",
+		"particle": "airlocks:blocks/console/console_stable_depressurized"
 	},
 	"elements": [
 		{

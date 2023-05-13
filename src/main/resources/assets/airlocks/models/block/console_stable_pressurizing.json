@@ -2,7 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"2": "airlocks:blocks/console_unstable_pressurizing"
+		"2": "airlocks:blocks/console/console_unstable_pressurizing",
+		"particle": "airlocks:blocks/console/console_stable_pressurized"
 	},
 	"elements": [
 		{

@@ -115,7 +115,7 @@ public class BlockDoorBase extends BlockDoor implements IHasModel
                 state = iblockstate.cycleProperty(OPEN);
                 worldIn.setBlockState(blockpos, state, 10);
                 worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
-                worldIn.playSound(playerIn, pos, state.getValue(OPEN) ? this.getNewOpenSound() : this.getNewCloseSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                worldIn.playSound(playerIn, pos, state.getValue(OPEN) ? this.getNewOpenSound() : this.getNewCloseSound(), SoundCategory.BLOCKS, 10.0F, 1.0F);
                 return true;
             }
         }
@@ -135,7 +135,7 @@ public class BlockDoorBase extends BlockDoor implements IHasModel
             {
                 worldIn.setBlockState(blockpos, state1.withProperty(OPEN, open), 10);
                 worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
-                worldIn.playSound(null, pos, open ? this.getNewOpenSound() : this.getNewCloseSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                worldIn.playSound(null, pos, open ? this.getNewOpenSound() : this.getNewCloseSound(), SoundCategory.BLOCKS, 10.0F, 1.0F);
             }
         }
     }
@@ -199,7 +199,7 @@ public class BlockDoorBase extends BlockDoor implements IHasModel
                     {
                         worldIn.setBlockState(pos, state.withProperty(OPEN, flag), 2);
                         worldIn.markBlockRangeForRenderUpdate(pos, pos);
-                        worldIn.playSound(null, pos, flag ? this.getNewOpenSound() : this.getNewCloseSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        worldIn.playSound(null, pos, flag ? this.getNewOpenSound() : this.getNewCloseSound(), SoundCategory.BLOCKS, 10.0F, 1.0F);
                     }
                 }
             }

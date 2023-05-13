@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=south,powered=false": {"model":  "airlocks:block_walkway"},
+    "facing=west,powered=false": {"model":  "airlocks:block_canvas", "y": 90},
+    "facing=north,powered=false": {"model":  "airlocks:block_canvas_corner", "y": 180},
+    "facing=east,powered=false": {"model":  "airlocks:block_airlock_door", "y": 270},
+    "facing=south,powered=true": {"model":  "airlocks:block_walkway"},
+    "facing=west,powered=true": {"model":  "airlocks:block_canvas", "y": 90},
+    "facing=north,powered=true": {"model":  "airlocks:block_canvas_corner", "y": 180},
+    "facing=east,powered=true": {"model":  "airlocks:block_airlock_door", "y": 270}
+  }
+}

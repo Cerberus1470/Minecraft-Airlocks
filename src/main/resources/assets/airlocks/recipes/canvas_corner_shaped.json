@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients":
+  [
+
+    {
+      "item": "airlocks:block_canvas"
+    }
+
+  ],
+
+  "result":
+  {
+    "item": "airlocks:block_canvas_corner",
+    "count": 4
+  }
+}

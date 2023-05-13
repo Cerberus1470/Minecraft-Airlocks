@@ -9,6 +9,7 @@ item.console_board.name=Console Board
 #Blocks
 tile.block_airlock_console.name=Airlock Console
 tile.block_canvas.name=Airlock Canvas
+tile.block_canvas_corner.name=Airlock Canvas Corner
 tile.block_walkway.name=Airlock Walkway
 tile.block_airlock_door.name=Airlock Door
 

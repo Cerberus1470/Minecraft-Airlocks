@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "facing=north": {"model": "airlocks:block_canvas_corner"},
+    "facing=east": {"model": "airlocks:block_canvas_corner", "y": 90},
+    "facing=south": {"model": "airlocks:block_canvas_corner", "y": 180},
+    "facing=west": {"model": "airlocks:block_canvas_corner", "y": 270}
+  }
+
+}

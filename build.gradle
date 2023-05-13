@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 apply plugin: 'idea'
 
-version = '1.0'
+version = '1.4'
 group = 'com.cerebot.airlocks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'airlocks'
 
